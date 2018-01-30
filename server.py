@@ -17,13 +17,15 @@ def server():
 		while not message_complete:
 			
 			part = conn.recv(buffer_length)
-			response = (part.decode('utf8'))
+			response = part.decode('utf8')
 			if len(part)< buffer_length:
 				break
 		
-		message = response
-		s.send(message)
-		conn.sendall(message.encode('utf8'))
+		message = response.encode('utf8')
+		print(message)
+		conn.send(message)
+		#conn.sendall(message.encode('utf8'))
+		
 	
 	
 	#continue running sending responses for any messages it recieves

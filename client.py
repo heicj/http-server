@@ -15,7 +15,7 @@ def client(message):
 		c.sendall(message.encode('utf8'))
 	
 	
-	response = c.recv(1)
+	response = c.recv(len(message))
 	print(response)
 	#send message passed as argument to server
 	

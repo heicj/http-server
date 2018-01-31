@@ -17,6 +17,7 @@ def client(message):
 	
 	response = c.recv(len(message))
 	print(response)
+	return response
 	#send message passed as argument to server
 	
 	#accumulate any reply sent by server into string

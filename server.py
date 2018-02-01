@@ -1,8 +1,10 @@
 import socket
 
+
 def server():
 	#start server running
-	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM, socket.IPPROTO_TCP)
+	#s = socket.socket(socket.AF_INET, socket.SOCK_STREAM, socket.IPPROTO_TCP)
+	s = socket.socket()
 	host = socket.gethostname()
 	address = (host, 5000)
 	s.bind(address)
@@ -33,5 +35,5 @@ def server():
 	#all open sockets should be closed
 	#should accept incoming connections and echo them back exactly as received.
 	#once message sent back connection to client should close
-	
+
 server()

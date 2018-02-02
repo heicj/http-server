@@ -26,14 +26,6 @@ def server():
 		message = response.encode('utf8')
 		print(message)
 		conn.send(message)
-		#conn.sendall(message.encode('utf8'))
-		
-	
-	
-	#continue running sending responses for any messages it recieves
-	#when user presses ctrl-d the server should cleanly exit
-	#all open sockets should be closed
-	#should accept incoming connections and echo them back exactly as received.
-	#once message sent back connection to client should close
+
 
 server()

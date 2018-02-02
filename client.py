@@ -2,7 +2,7 @@ import socket
 import sys
 
 debug = True
-def client(message):
+def client(eom, message):
 	#open a socket to server
 	
 	#c = socket.socket(socket.AF_INET, socket.SOCK_STREAM, socket.IPPROTO_TCP)
@@ -18,26 +18,27 @@ def client(message):
 	except:
 		print("connection failed")
 	else:
-		c.sendall(message.encode('utf8'))
 	
-	"""
-	buffer_length = 8
-	message_complete = False
-	while not message_complete:
-			
-		part = c.recv(buffer_length)
-		response = part.decode('utf8')
-		if len(part)< buffer_length:
-			break
-	"""
-	response = c.recv(len(message))
-	print(response)
-	return response
-	#send message passed as argument to server
-	
-	#accumulate any reply sent by server into string
-	#once recieved, close the socket
-	#return message
+		message = str.encode(message)
+		c.sendall(message)
+		
+		if eom == "close":
+			s.close()
+			return
+		elif eom =="LF":
+			c.send(str.encode("\n"))
+		
+		raw = c.recv(len(message))
+		result = raw.decode()
+		
+		c.close()
+		
+		print(result)
+		
+
 	
 if __name__ == '__main__':
-	client(sys.argv[1])
+	if len(sys.argv) <= 2:
+		print("client EOM message")
+	else:
+		client(sys.argv[1], sys.argv[2])

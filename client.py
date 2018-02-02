@@ -23,9 +23,9 @@ def client(eom, message):
 		c.sendall(message)
 		
 		if eom == "close":
-			s.close()
+			c.close()
 			return
-		elif eom =="LF":
+		elif eom == "LF":
 			c.send(str.encode("\n"))
 		
 		raw = c.recv(len(message))
@@ -34,6 +34,7 @@ def client(eom, message):
 		c.close()
 		
 		print(result)
+		return result
 		
 
 	

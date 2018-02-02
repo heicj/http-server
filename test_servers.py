@@ -3,8 +3,5 @@ import unittest
 
 class TestIt(unittest.TestCase):
 	def test_1(self):
-		self.assertEqual(client("hello"), b"hello")
+		self.assertEqual(client("LF", "Hello"), "Hello")
 
-
-if __name__ == '__main__':
-	unittest.main()

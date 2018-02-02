@@ -13,19 +13,26 @@ def server():
 	while True:
 		conn, addr = s.accept()
 		print(conn)
-	
-		buffer_length = 8
-		message_complete = False
-		while not message_complete:
+		message = b''
+		while True:
+			data = conn.recv(1)
 			
-			part = conn.recv(buffer_length)
-			response = part.decode('utf8')
-			if len(part)< buffer_length:
+			if data == b'':
 				break
-		
-		message = response.encode('utf8')
-		print(message)
+			
+			if data == b'\n':
+				break
+				
+			message += data
+			
 		conn.send(message)
-
+		conn.close()
+		
+		if message.decode() == 'q':
+			break
+		
+	
+	
+	
 
 server()

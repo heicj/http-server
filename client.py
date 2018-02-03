@@ -46,16 +46,33 @@ def client(eom, message):
 		print("connection failed")
 	else:
 	
-		message = request(message)
+		#message = request(message)
 		c.sendall(message.encode())
 		
-		raw = c.recv(len(message))
-		result = raw.decode()
+		if eom == "close":
+			c.close()
+			return
+		elif eom == "LF":
+			c.send(str.encode("\n"))
+		
+		#raw = c.recv(len(message))
+		buffer_length = 8
+		message_complete = False
+		response = ''
+		while not message_complete:
+ 	
+			part = c.recv(buffer_length)
+			response += part.decode('utf8')
+			if len(part)< buffer_length:
+				break
+ 
+				
+		message = response
 		
 		c.close()
 		
-		print(result)
-		return result
+		print(message)
+		return message
 		
 
 	

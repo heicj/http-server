@@ -37,11 +37,17 @@ def server():
 			
 		strMessage = message.decode()
 		
-		
+		print(message)
 		#ok response
-		ok = response_ok()
-		error = response_error()
-		conn.send(error.encode())
+		if strMessage == "testOK":
+			ok = response_ok()
+			conn.send(ok.encode())
+		
+		#test sending error response
+		if strMessage == "testError":
+			error = response_error()
+			conn.send(error.encode())
+			
 		conn.close()
 		
 		

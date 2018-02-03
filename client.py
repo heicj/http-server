@@ -16,7 +16,7 @@ def request(message):
 		VERSION = "HTTP/1.1"
 		CRLF = "\r\n"
 		
-		#message = str.encode(message)
+		
 		
 		request = REQUEST + ' ' + VERSION + CRLF
 		headers = "host: (0)".format(host) + CRLF
@@ -25,7 +25,9 @@ def request(message):
 		req = head + CRLF + body + CRLF
 		return req
 def parse_http(message):
-	return message.body
+	res = message.decode()
+	
+	
 	
 def client(eom, message):
 	#open a socket to server
@@ -47,12 +49,6 @@ def client(eom, message):
 		message = request(message)
 		c.sendall(message.encode())
 		
-		if eom == "close":
-			c.close()
-			return
-		elif eom == "LF":
-			c.send(str.encode("\n"))
-		
 		raw = c.recv(len(message))
 		result = raw.decode()
 		
@@ -64,7 +60,4 @@ def client(eom, message):
 
 	
 if __name__ == '__main__':
-	if len(sys.argv) <= 2:
-		print("client EOM message")
-	else:
-		client(sys.argv[1], sys.argv[2])
+	client(sys.argv[1])

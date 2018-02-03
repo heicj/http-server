@@ -38,7 +38,7 @@ def server():
 	while True:
 		conn, addr = s.accept()
 		print(conn)
-		message = b''
+		"""message = b''
 		while True:
 			data = conn.recv(1)
 			
@@ -57,7 +57,7 @@ def server():
 		conn.close()
 		
 		if message.decode() == 'q':
-			break
+			break"""
 		
 	
 	

@@ -1,5 +1,5 @@
 import socket
-
+debug = False
 
 def server():
 	#start server running
@@ -12,7 +12,7 @@ def server():
 	s.listen(1)
 	while True:
 		conn, addr = s.accept()
-		print(conn)
+		if debug: print(conn)
 		message = b''
 		while True:
 			data = conn.recv(1)

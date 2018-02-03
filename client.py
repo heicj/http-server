@@ -60,4 +60,4 @@ def client(eom, message):
 
 	
 if __name__ == '__main__':
-	client(sys.argv[1])
+	client(sys.argv[1], sys.argv[2])

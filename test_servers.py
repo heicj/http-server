@@ -21,3 +21,4 @@ class TestIt(unittest.TestCase):
 		
 	def test_5(self):
 		self.assertEqual(client("LF", "testError"), 'HTTP/1.1 500 Internal Server Error')
+

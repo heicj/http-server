@@ -1,11 +1,14 @@
 import socket
 
+
 def response_ok():
 	return "HTTP/1.1 200 OK"
 	
 def response_error():
 	return "HTTP/1.1 500 Internal Server Error"
 
+
+debug = False
 
 def server():
 	#start server running
@@ -21,8 +24,9 @@ def server():
 		
 	while True:
 		conn, addr = s.accept()
-		
-		#print(conn)
+
+		if debug: print(conn)
+
 		message = b''
 		while True:
 			data = conn.recv(1)

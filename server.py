@@ -1,5 +1,27 @@
 import socket
 
+def response_ok(message):
+		"""header
+			request
+			headers
+			<crlf>
+			message
+			<crlf>
+		"""
+		host = socket.gethostname()
+		REQUEST = "GET"
+		VERSION = "HTTP/1.1"
+		CRLF = "\r\n"
+		OK = "200 OK"
+		
+		#message = str.encode(message)
+		
+		response = REQUEST + ' ' + VERSION + ' ' + OK + CRLF
+		headers = "host: (0)".format(host) + CRLF
+		head = response + headers
+		body = message + CRLF
+		return head + CRLF + body + CRLF
+
 
 def server():
 	#start server running
@@ -10,6 +32,9 @@ def server():
 	s.bind(address)
 	
 	s.listen(1)
+	
+	
+		
 	while True:
 		conn, addr = s.accept()
 		print(conn)
@@ -25,7 +50,10 @@ def server():
 				
 			message += data
 			
-		conn.send(message)
+		strMessage = message.decode()
+		httpResponse = response_ok(strMessage)	
+		
+		conn.send(httpResponse.encode())
 		conn.close()
 		
 		if message.decode() == 'q':

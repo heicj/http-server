@@ -1,11 +1,38 @@
 import socket
 
+debug = False
+
+RootDir = r"C:\Users\Charlie\Documents\code401\serverExample\webroot\webroot\webroot"
+
 
 def response_ok():
 	return "HTTP/1.1 200 OK"
 	
 def response_error():
 	return "HTTP/1.1 500 Internal Server Error"
+
+def openFile(path):
+	import io
+	
+	#combines root with path requested
+	f = open(RootDir + path)
+	#reads file to get content and size
+	text = f.read()
+	size = len(text)
+	if debug: print("size inside openFile: ",size)
+	return text, size
+	
+def resolve_uri(path):
+	data, size = openFile(path)  #uses openFile function to get data and size
+	CRLF = "\r\n"
+	Host = "Host: 0"
+	
+	ok = response_ok() #runs response_ok function to get response line
+	header = "{0}, Size: {1}".format(Host, size) + CRLF
+	packet = ok + CRLF + header + data + CRLF
+	if debug: print(data)
+	if debug: print("size in resolve_uri: ", size)
+	return packet
 
 
 	
@@ -69,12 +96,25 @@ def server():
  
 				
 		message = response
-		httpMessage = parse_request(message)
+		
+		#returns resource (file ext) from get request
+		resource = parse_request(message)
+		
+		#resolve_uri takes resource from packet sent and opens file gets data repackages
+		packet = resolve_uri(resource)
+		
+		#encodes http packet created and sends to client
+		conn.send(packet.encode())
+		
 		strMessage = message.decode()
-		conn.send(httpMessage.encode())
-		print(httpMessage)
 		
 		
+		
+		if debug: print(resource)
+
+		
+		
+		#tests functionality before http packet was added
 		#ok response
 		if strMessage == "testOK":
 			ok = response_ok()

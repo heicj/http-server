@@ -2,7 +2,14 @@ import socket
 import sys
 
 debug = False
+"""
+resources:
+\sample.txt
+\a_web_page.html
+\images\JPEG_example.jpg
+\images\Sample_Scene_Balls.jpg
 
+"""
 def request(message):
 		"""header
 			request
@@ -15,12 +22,12 @@ def request(message):
 		REQUEST = "GET"
 		VERSION = "HTTP/1.1"
 		CRLF = "\r\n"
-		RESOURCE = '/'
+		RESOURCE = '\sample.txt'
 		
 		
 		
 		request = REQUEST + ' ' + RESOURCE + ' ' + VERSION + CRLF
-		headers = "host: (0)".format(host) + CRLF
+		headers = "host: {0}".format(host) + CRLF
 		head = request + headers
 		body = message + CRLF
 		req = head + CRLF + body

@@ -1,5 +1,7 @@
 import socket
 
+debug = False
+
 RootDir = r"C:\Users\Charlie\Documents\code401\serverExample\webroot\webroot\webroot"
 
 
@@ -11,28 +13,25 @@ def response_error():
 
 def openFile(path):
 	import io
-	#path = r"\sample.txt"
+	
+	#combines root with path requested
 	f = open(RootDir + path)
+	#reads file to get content and size
 	text = f.read()
 	size = len(text)
-	#print(size)
-	
-	#print(text)
+	if debug: print("size inside openFile: ",size)
 	return text, size
 	
 def resolve_uri(path):
-	data, size = openFile(path)
+	data, size = openFile(path)  #uses openFile function to get data and size
 	CRLF = "\r\n"
 	Host = "Host: 0"
 	
-	#data has the string of text from file
-	#size has size
-	#run response_ok function to get http first line
-	ok = response_ok()
-	header = "Host: (0), Size: (1)".format(Host, size) + CRLF
+	ok = response_ok() #runs response_ok function to get response line
+	header = "{0}, Size: {1}".format(Host, size) + CRLF
 	packet = ok + CRLF + header + data + CRLF
-	print(data)
-	print(size)
+	if debug: print(data)
+	if debug: print("size in resolve_uri: ", size)
 	return packet
 
 
@@ -101,19 +100,21 @@ def server():
 		#returns resource (file ext) from get request
 		resource = parse_request(message)
 		
-		#runs openFile function using path 
-		#openFile(resource)
-		
+		#resolve_uri takes resource from packet sent and opens file gets data repackages
 		packet = resolve_uri(resource)
+		
+		#encodes http packet created and sends to client
+		conn.send(packet.encode())
 		
 		strMessage = message.decode()
 		
-		#currently sends back resource path requested
-		conn.send(packet.encode())
-		print(resource)
-		#openFile()
 		
 		
+		if debug: print(resource)
+
+		
+		
+		#tests functionality before http packet was added
 		#ok response
 		if strMessage == "testOK":
 			ok = response_ok()

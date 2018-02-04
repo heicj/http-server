@@ -27,7 +27,7 @@ def request(message):
 		
 		
 		request = REQUEST + ' ' + RESOURCE + ' ' + VERSION + CRLF
-		headers = "host: (0)".format(host) + CRLF
+		headers = "host: {0}".format(host) + CRLF
 		head = request + headers
 		body = message + CRLF
 		req = head + CRLF + body

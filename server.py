@@ -16,11 +16,21 @@ def parse_request(message):
 	req = parts[0].split(' ')
 	
 	reqType = req[0]  #first part is GET
-	resourse = req[1] #gets resource part
+	resource = req[1] #gets resource part
 	version = req[2] #gets version type
 	host = parts[1] #gets host as host: (0)
 	body = parts[3] #contains body content
 	
+	if reqType != "GET":
+		raise NotImplementedError('Not a GET request')
+	
+	if version != "HTTP/1.1":
+		raise Exception("version not supported")
+	
+	if host == None:
+		raise Exception("Host not sent")
+		
+	return resource
 	#print(req[0]) #first part is GET
 	#print(req[1]) #second part is resource
 	#print(req[2]) #3rd part is version
@@ -75,26 +85,11 @@ def server():
 				
 		message = response
 		httpMessage = parse_request(message)
-		#strMessage = message.decode()
+		strMessage = message.decode()
+		conn.send(httpMessage.encode())
 		print(httpMessage)
-		"""
-		message = b''
-		while True:
-			data = conn.recv(1)
-			
-			if data == b'':
-				break
-			
-			if data == b'\n':
-				break
-				
-			message += data
-		"""	
-		#strMessage = message.decode()
 		
 		
-		#print(message)
-		"""
 		#ok response
 		if strMessage == "testOK":
 			ok = response_ok()
@@ -104,7 +99,7 @@ def server():
 		if strMessage == "testError":
 			error = response_error()
 			conn.send(error.encode())
-		"""
+		
 		conn.close()
 		
 		

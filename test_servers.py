@@ -14,11 +14,16 @@ class TestIt(unittest.TestCase):
 		self.assertEqual(client("LF", ""), "")
 	"""
 	
-	#tests for step1 getting http response
-	
-	def test_4(self):
-		self.assertEqual(client("LF", "testOK"), 'HTTP/1.1 200 OK')
+	#tests for step1 part of assignment getting http response
+	#def test_4(self):
+	#	"""uses key phase testOK to test get a 200 ok response"""
+	#	self.assertEqual(client("LF", "testOK"), 'HTTP/1.1 200 OK')
 		
-	def test_5(self):
-		self.assertEqual(client("LF", "testError"), 'HTTP/1.1 500 Internal Server Error')
+	#def test_5(self):
+	#	"""uses key phrase testError to check error response works"""
+	#	self.assertEqual(client("LF", "testError"), 'HTTP/1.1 500 Internal Server Error')
+		
+	def test_6(self):
+		"""test that request to server sends back the resource requested"""
+		self.assertEqual(client("test"), "/")
 

@@ -1,7 +1,7 @@
 import socket
 import sys
 
-debug = True
+debug = False
 
 def request(message):
 		"""header
@@ -15,21 +15,24 @@ def request(message):
 		REQUEST = "GET"
 		VERSION = "HTTP/1.1"
 		CRLF = "\r\n"
+		RESOURCE = '/'
 		
 		
 		
-		request = REQUEST + ' ' + VERSION + CRLF
+		request = REQUEST + ' ' + RESOURCE + ' ' + VERSION + CRLF
 		headers = "host: (0)".format(host) + CRLF
 		head = request + headers
 		body = message + CRLF
-		req = head + CRLF + body + CRLF
+		req = head + CRLF + body
+		if debug: print(req)
 		return req
+
 def parse_http(message):
 	res = message.decode()
 	
 	
 	
-def client(eom, message):
+def client(message):
 	#open a socket to server
 	
 	#c = socket.socket(socket.AF_INET, socket.SOCK_STREAM, socket.IPPROTO_TCP)
@@ -46,16 +49,10 @@ def client(eom, message):
 		print("connection failed")
 	else:
 	
-		#message = request(message)
-		c.sendall(message.encode())
+		httpMessage = request(message)
 		
-		if eom == "close":
-			c.close()
-			return
-		elif eom == "LF":
-			c.send(str.encode("\n"))
+		c.sendall(httpMessage.encode())
 		
-		#raw = c.recv(len(message))
 		buffer_length = 8
 		message_complete = False
 		response = ''
@@ -77,4 +74,4 @@ def client(eom, message):
 
 	
 if __name__ == '__main__':
-	client(sys.argv[1], sys.argv[2])
+	client(sys.argv[1])

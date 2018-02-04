@@ -12,8 +12,24 @@ def response_error():
 def parse_request(message):
 	#takes byte string request and parses it
 	str = message.decode()
-	parts = str.split(' ')
-	print(parts)
+	parts = str.split('\r\n')
+	req = parts[0].split(' ')
+	
+	reqType = req[0]  #first part is GET
+	resourse = req[1] #gets resource part
+	version = req[2] #gets version type
+	host = parts[1] #gets host as host: (0)
+	body = parts[3] #contains body content
+	
+	#print(req[0]) #first part is GET
+	#print(req[1]) #second part is resource
+	#print(req[2]) #3rd part is version
+	#print('whole thing: ', parts) #prints out whole request along with body
+	#print('get request: ', parts[0]) #prints out whole request line
+	#print('host: ', parts[1]) #prints host  host: (0)
+	#print('body : ', parts[3]) #prints body
+	
+	
 	
 	#only accept GET requests other requests should raise appropriate python exception
 	
@@ -58,8 +74,9 @@ def server():
  
 				
 		message = response
-		strMessage = message.decode()
-		print(strMessage)
+		httpMessage = parse_request(message)
+		#strMessage = message.decode()
+		print(httpMessage)
 		"""
 		message = b''
 		while True:
@@ -75,8 +92,9 @@ def server():
 		"""	
 		#strMessage = message.decode()
 		
-		#parse_request(message)
+		
 		#print(message)
+		"""
 		#ok response
 		if strMessage == "testOK":
 			ok = response_ok()
@@ -86,7 +104,7 @@ def server():
 		if strMessage == "testError":
 			error = response_error()
 			conn.send(error.encode())
-			
+		"""
 		conn.close()
 		
 		

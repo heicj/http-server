@@ -2,7 +2,14 @@ import socket
 import sys
 
 debug = False
+"""
+resources:
+\sample.txt
+\a_web_page.html
+\images\JPEG_example.jpg
+\images\Sample_Scene_Balls.jpg
 
+"""
 def request(message):
 		"""header
 			request

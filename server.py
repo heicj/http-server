@@ -1,11 +1,23 @@
 import socket
 
+RootDir = r"C:\Users\Charlie\Documents\code401\serverExample\webroot\webroot\webroot"
+
 
 def response_ok():
 	return "HTTP/1.1 200 OK"
 	
 def response_error():
 	return "HTTP/1.1 500 Internal Server Error"
+
+def openFile():
+	import io
+	path = r"\sample.txt"
+	f = open(RootDir + path)
+	text = f.read()
+	size = len(text)
+	print(size)
+	
+	print(text)
 
 
 	
@@ -73,6 +85,7 @@ def server():
 		strMessage = message.decode()
 		conn.send(httpMessage.encode())
 		print(httpMessage)
+		openFile()
 		
 		
 		#ok response

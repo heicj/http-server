@@ -8,6 +8,24 @@ def response_error():
 	return "HTTP/1.1 500 Internal Server Error"
 
 
+	
+def parse_request(message):
+	#takes byte string request and parses it
+	str = message.decode()
+	parts = str.split(' ')
+	print(parts)
+	
+	#only accept GET requests other requests should raise appropriate python exception
+	
+	#only accept http/1.1 requests other wise raise exception
+	
+	#validate host header if not raise exception
+	
+	#validate message is well formed else raise exception
+	
+	#if no exceptions should return URI from the request
+
+
 debug = False
 
 def server():
@@ -27,6 +45,22 @@ def server():
 
 		if debug: print(conn)
 
+		
+		buffer_length = 8
+		message_complete = False
+		response = b''
+		while not message_complete:
+ 	
+			part = conn.recv(buffer_length)
+			response += part
+			if len(part)< buffer_length:
+				break
+ 
+				
+		message = response
+		strMessage = message.decode()
+		print(strMessage)
+		"""
 		message = b''
 		while True:
 			data = conn.recv(1)
@@ -38,10 +72,11 @@ def server():
 				break
 				
 			message += data
-			
-		strMessage = message.decode()
+		"""	
+		#strMessage = message.decode()
 		
-		print(message)
+		#parse_request(message)
+		#print(message)
 		#ok response
 		if strMessage == "testOK":
 			ok = response_ok()

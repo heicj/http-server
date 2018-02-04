@@ -1,7 +1,7 @@
 import socket
 import sys
 
-debug = True
+debug = False
 
 def request(message):
 		"""header
@@ -52,15 +52,7 @@ def client(message):
 		httpMessage = request(message)
 		
 		c.sendall(httpMessage.encode())
-		"""
-		if eom == "close":
-			c.close()
-			return
-		elif eom == "LF":
-			c.send(str.encode("\n"))
-		"""
 		
-		#raw = c.recv(len(message))
 		buffer_length = 8
 		message_complete = False
 		response = ''

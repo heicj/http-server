@@ -23,7 +23,18 @@ class TestIt(unittest.TestCase):
 	#	"""uses key phrase testError to check error response works"""
 	#	self.assertEqual(client("LF", "testError"), 'HTTP/1.1 500 Internal Server Error')
 		
-	def test_6(self):
-		"""test that request to server sends back the resource requested"""
-		self.assertEqual(client("test"), "/")
+	#def test_6(self):
+	#	"""test that request to server sends back the resource requested"""
+	#	self.assertEqual(client("test"), "/")
+	
+	#tests for step2 ran one at a time
+	def test_7(self): 
+		"""test that error is raised when request isn't a GET requset"""
+		self.assertEqual(client('test'), 'Not a GET request')
+	
+	def test_8(self):
+		"""test that version is not http/1.1"""
+		self.assertEqual(client('test'), 'version not supported')
+		
+	
 

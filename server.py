@@ -19,44 +19,29 @@ def parse_request(message):
 	resource = req[1] #gets resource part
 	version = req[2] #gets version type
 	host = parts[1] #gets host as host: (0)
+	hostParts = host.split(' ')
 	body = parts[3] #contains body content
 	
+	response = resource
+	
 	if reqType != "GET":
-		raise NotImplementedError('Not a GET request')
+		response = "Not a GET request"
 	
 	if version != "HTTP/1.1":
-		raise Exception("version not supported")
+		response = "version not supported"
 	
-	if host == None:
-		raise Exception("Host not sent")
+	if hostParts[0] != 'host:':
+		response = "Host not sent"
 		
-	return resource
-	#print(req[0]) #first part is GET
-	#print(req[1]) #second part is resource
-	#print(req[2]) #3rd part is version
-	#print('whole thing: ', parts) #prints out whole request along with body
-	#print('get request: ', parts[0]) #prints out whole request line
-	#print('host: ', parts[1]) #prints host  host: (0)
-	#print('body : ', parts[3]) #prints body
-	
-	
-	
-	#only accept GET requests other requests should raise appropriate python exception
-	
-	#only accept http/1.1 requests other wise raise exception
-	
-	#validate host header if not raise exception
-	
-	#validate message is well formed else raise exception
-	
-	#if no exceptions should return URI from the request
+	return response
+
 
 
 debug = False
 
 def server():
 	#start server running
-	#s = socket.socket(socket.AF_INET, socket.SOCK_STREAM, socket.IPPROTO_TCP)
+	
 	s = socket.socket()
 	host = socket.gethostname()
 	address = (host, 5000)

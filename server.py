@@ -9,15 +9,31 @@ def response_ok():
 def response_error():
 	return "HTTP/1.1 500 Internal Server Error"
 
-def openFile():
+def openFile(path):
 	import io
-	path = r"\sample.txt"
+	#path = r"\sample.txt"
 	f = open(RootDir + path)
 	text = f.read()
 	size = len(text)
-	print(size)
+	#print(size)
 	
-	print(text)
+	#print(text)
+	return text, size
+	
+def resolve_uri(path):
+	data, size = openFile(path)
+	CRLF = "\r\n"
+	Host = "Host: 0"
+	
+	#data has the string of text from file
+	#size has size
+	#run response_ok function to get http first line
+	ok = response_ok()
+	header = "Host: (0), Size: (1)".format(Host, size) + CRLF
+	packet = ok + CRLF + header + data + CRLF
+	print(data)
+	print(size)
+	return packet
 
 
 	
@@ -81,11 +97,21 @@ def server():
  
 				
 		message = response
-		httpMessage = parse_request(message)
+		
+		#returns resource (file ext) from get request
+		resource = parse_request(message)
+		
+		#runs openFile function using path 
+		#openFile(resource)
+		
+		packet = resolve_uri(resource)
+		
 		strMessage = message.decode()
-		conn.send(httpMessage.encode())
-		print(httpMessage)
-		openFile()
+		
+		#currently sends back resource path requested
+		conn.send(packet.encode())
+		print(resource)
+		#openFile()
 		
 		
 		#ok response

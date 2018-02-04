@@ -22,7 +22,7 @@ def request(message):
 		REQUEST = "GET"
 		VERSION = "HTTP/1.1"
 		CRLF = "\r\n"
-		RESOURCE = '/'
+		RESOURCE = '\sample.txt'
 		
 		
 		
